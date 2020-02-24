@@ -39,14 +39,15 @@ public void draw (){
     background( 0 );
     if(isWon() == true)
         displayWinningMessage();
+
 }
 public boolean isWon(){
-    //your code here
+ //  if ()
     return false;
 }
 public void displayLosingMessage(){
     fill(210,160,43);
-    text("You win!", 200,200);
+    text("You Lose!", 200,200);
 }
 public void displayWinningMessage(){
     fill(2,200,43);
@@ -59,7 +60,9 @@ public boolean isValid(int r, int c){
 }
 public int countMines(int row, int col){
     int numMines = 0;
-    //your code here
+    if (isValid(row-1,col-1) && mines.contains(buttons[row-1][col-1]))
+        numMines++;
+
     return numMines;
 }
 
@@ -91,10 +94,14 @@ public class MSButton{
     public void draw () {    
         if (flagged)
             fill(100,50,230);
-        else if( clicked && mines.contains(this) ) 
+        else if( clicked && mines.contains(this) ) {
             fill(255,0,15);
-        else if(clicked)
+           // isWon=false;
+        }
+        else if(clicked){
             fill( 220,150,100);
+            setLabel(countMines(myRow,myCol));
+        }
         else 
             fill( 120,190,40 );
 
@@ -112,3 +119,8 @@ public class MSButton{
         return flagged;
     }
 }
+
+
+ // fill(0);
+ //    rect(0,0,400,400);
+ //    displayLosingMessage();
