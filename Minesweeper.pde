@@ -62,7 +62,20 @@ public int countMines(int row, int col){
     int numMines = 0;
     if (isValid(row-1,col-1) && mines.contains(buttons[row-1][col-1]))
         numMines++;
-
+    if (isValid(row-1,col) && mines.contains(buttons[row-1][col]))
+        numMines++;
+    if (isValid(row-1,col+1) && mines.contains(buttons[row-1][col+1]))
+        numMines++;
+    if (isValid(row,col-1) && mines.contains(buttons[row][col-1]))
+        numMines++;
+    if (isValid(row,col+1) && mines.contains(buttons[row][col+1]))
+        numMines++;
+    if (isValid(row+1,col-1) && mines.contains(buttons[row+1][col-1]))
+        numMines++;
+    if (isValid(row+1,col) && mines.contains(buttons[row+1][col]))
+        numMines++;
+    if (isValid(row+1,col+1) && mines.contains(buttons[row+1][col+1]))
+        numMines++;
     return numMines;
 }
 
@@ -88,19 +101,36 @@ public class MSButton{
     public void mousePressed () {
         if (mouseButton==LEFT)
             clicked = true;
-        if (mouseButton==RIGHT)
+        else if (clicked==false && mouseButton==RIGHT)
             flagged = !flagged;
     }
     public void draw () {    
         if (flagged)
             fill(100,50,230);
-        else if( clicked && mines.contains(this) ) {
+        else if(clicked && mines.contains(this))
             fill(255,0,15);
-           // isWon=false;
-        }
         else if(clicked){
             fill( 220,150,100);
             setLabel(countMines(myRow,myCol));
+            
+            if (countMines(myRow,myCol)==0){
+                if(isValid(myRow-1,myCol-1))
+                    buttons[myRow-1][myCol-1].mousePressed();
+                if(isValid(myRow-1,myCol))
+                    buttons[myRow-1][myCol].mousePressed();
+                if(isValid(myRow-1,myCol+1))
+                    buttons[myRow-1][myCol+1].mousePressed();
+                if(isValid(myRow,myCol-1))
+                    buttons[myRow][myCol-1].mousePressed();
+                if(isValid(myRow,myCol+1))
+                    buttons[myRow][myCol+1].mousePressed();
+                if(isValid(myRow+1,myCol-1))
+                    buttons[myRow+1][myCol-1].mousePressed();
+                if(isValid(myRow+1,myCol))
+                    buttons[myRow+1][myCol].mousePressed();
+                if(isValid(myRow+1,myCol+1))
+                    buttons[myRow+1][myCol+1].mousePressed();
+            }
         }
         else 
             fill( 120,190,40 );
