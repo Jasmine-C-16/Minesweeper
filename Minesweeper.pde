@@ -4,6 +4,7 @@ private MSButton[][] buttons; //2d array of minesweeper buttons
 private ArrayList <MSButton> mines; //ArrayList of just the minesweeper buttons that are mined
 public static int NUM_ROWS = 5;
 public static int NUM_COLS = 5;
+public static int mineprobablility = 0; // 1/mineprobablility chance of button being a mine
 
 void setup ()
 {
@@ -26,8 +27,7 @@ public void setMines(){
     int rand=0;
     for (int r=0;r<NUM_ROWS;r++)
         for (int c=0;c<NUM_COLS;c++){
-            rand=(int)(Math.random()*10);
-            //System.out.println(rand);
+            rand=(int)(Math.random()*mineprobablility);
             if (rand==1){
                 mines.add(buttons[r][c]);
                 System.out.println(r + ", " + c);
@@ -98,11 +98,30 @@ public class MSButton{
     }
 
     // called by manager
-    public void mousePressed () {
-        if (mouseButton==LEFT)
+    public void mousePressed() {
+        if (mouseButton==LEFT && flagged==false)
             clicked = true;
         else if (clicked==false && mouseButton==RIGHT)
             flagged = !flagged;
+
+        if (clicked==true && countMines(myRow,myCol)==0){ //this only calls one function, does not call the whole block???
+            if(isValid(myRow-1,myCol-1))
+                buttons[myRow-1][myCol-1].mousePressed();
+            if(isValid(myRow-1,myCol))
+                buttons[myRow-1][myCol].mousePressed();
+            if(isValid(myRow-1,myCol+1))
+                buttons[myRow-1][myCol+1].mousePressed();
+            if(isValid(myRow,myCol-1))
+                buttons[myRow][myCol-1].mousePressed();
+            if(isValid(myRow,myCol+1))
+                buttons[myRow][myCol+1].mousePressed();
+            if(isValid(myRow+1,myCol-1))
+                buttons[myRow+1][myCol-1].mousePressed();
+            if(isValid(myRow+1,myCol))
+                buttons[myRow+1][myCol].mousePressed();
+            if(isValid(myRow+1,myCol+1))
+                buttons[myRow+1][myCol+1].mousePressed();
+        }
     }
     public void draw () {    
         if (flagged)
@@ -113,24 +132,7 @@ public class MSButton{
             fill( 220,150,100);
             setLabel(countMines(myRow,myCol));
             
-            if (countMines(myRow,myCol)==0){
-                if(isValid(myRow-1,myCol-1))
-                    buttons[myRow-1][myCol-1].mousePressed();
-                if(isValid(myRow-1,myCol))
-                    buttons[myRow-1][myCol].mousePressed();
-                if(isValid(myRow-1,myCol+1))
-                    buttons[myRow-1][myCol+1].mousePressed();
-                if(isValid(myRow,myCol-1))
-                    buttons[myRow][myCol-1].mousePressed();
-                if(isValid(myRow,myCol+1))
-                    buttons[myRow][myCol+1].mousePressed();
-                if(isValid(myRow+1,myCol-1))
-                    buttons[myRow+1][myCol-1].mousePressed();
-                if(isValid(myRow+1,myCol))
-                    buttons[myRow+1][myCol].mousePressed();
-                if(isValid(myRow+1,myCol+1))
-                    buttons[myRow+1][myCol+1].mousePressed();
-            }
+           
         }
         else 
             fill( 120,190,40 );
