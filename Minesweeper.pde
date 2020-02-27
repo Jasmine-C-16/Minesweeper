@@ -2,9 +2,9 @@ import de.bezier.guido.*;
 //Declare and initialize constants NUM_ROWS and NUM_COLS = 20
 private MSButton[][] buttons; //2d array of minesweeper buttons
 private ArrayList <MSButton> mines; //ArrayList of just the minesweeper buttons that are mined
-public static int NUM_ROWS = 5;
-public static int NUM_COLS = 5;
-public static int mineprobablility = 0; // 1/mineprobablility chance of button being a mine
+public static int NUM_ROWS = 15;
+public static int NUM_COLS = 15;
+public static int mineprobablility = 10; // 1/mineprobablility chance of button being a mine
 
 void setup ()
 {
@@ -105,21 +105,21 @@ public class MSButton{
             flagged = !flagged;
 
         if (clicked==true && countMines(myRow,myCol)==0){ //this only calls one function, does not call the whole block???
-            if(isValid(myRow-1,myCol-1))
+            if(isValid(myRow-1,myCol-1) && buttons[myRow-1][myCol-1].clicked == false)
                 buttons[myRow-1][myCol-1].mousePressed();
-            if(isValid(myRow-1,myCol))
+            if(isValid(myRow-1,myCol) && buttons[myRow-1][myCol].clicked == false)
                 buttons[myRow-1][myCol].mousePressed();
-            if(isValid(myRow-1,myCol+1))
+            if(isValid(myRow-1,myCol+1) && buttons[myRow-1][myCol+1].clicked == false)
                 buttons[myRow-1][myCol+1].mousePressed();
-            if(isValid(myRow,myCol-1))
+            if(isValid(myRow,myCol-1) && buttons[myRow][myCol-1].clicked == false)
                 buttons[myRow][myCol-1].mousePressed();
-            if(isValid(myRow,myCol+1))
+            if(isValid(myRow,myCol+1) && buttons[myRow][myCol+1].clicked == false)
                 buttons[myRow][myCol+1].mousePressed();
-            if(isValid(myRow+1,myCol-1))
+            if(isValid(myRow+1,myCol-1) && buttons[myRow+1][myCol-1].clicked == false)
                 buttons[myRow+1][myCol-1].mousePressed();
-            if(isValid(myRow+1,myCol))
+            if(isValid(myRow+1,myCol) && buttons[myRow+1][myCol].clicked == false )
                 buttons[myRow+1][myCol].mousePressed();
-            if(isValid(myRow+1,myCol+1))
+            if(isValid(myRow+1,myCol+1) && buttons[myRow+1][myCol+1].clicked == false)
                 buttons[myRow+1][myCol+1].mousePressed();
         }
     }
