@@ -2,8 +2,8 @@ import de.bezier.guido.*;
 //Declare and initialize constants NUM_ROWS and NUM_COLS = 20
 private MSButton[][] buttons; //2d array of minesweeper buttons
 private ArrayList <MSButton> mines; //ArrayList of just the minesweeper buttons that are mined
-public static int NUM_ROWS = 15;
-public static int NUM_COLS = 15;
+public static int NUM_ROWS = 5;
+public static int NUM_COLS = 5;
 public static int mineprobablility = 10; // 1/mineprobablility chance of button being a mine
 
 void setup ()
@@ -36,22 +36,41 @@ public void setMines(){
 }
 
 public void draw (){
-    background( 0 );
-    if(isWon() == true)
-        displayWinningMessage();
+    // background( 0 );
+    // if(isWon() == true){
+    //     displayWinningMessage();
+    //     System.exit(0);
+    // }
+
 
 }
 public boolean isWon(){
- //  if ()
-    return false;
+    for (int r=0;r<buttons.length;r++)   //reveals bombs
+        for (int c=0;c<buttons[r].length;c++)
+            if (mines.contains(this)==false && buttons[r][c].isClicked()==false)
+                return false;
+    return true;
+    
 }
 public void displayLosingMessage(){
-    fill(210,160,43);
-    text("You Lose!", 200,200);
+        fill(210,160,43);
+        rect(400,400,200,200);
+        text("You Lose!", 200,200);
+
+        for (int r=0;r<buttons.length;r++){     //reveals bombs
+            for (int c=0;c<buttons[r].length;c++){
+                if(buttons[r][c].isFlagged()==true)
+                    buttons[r][c].flagged=false;
+                buttons[r][c].clicked=true;
+            }
+        }
+        System.out.println("lose");
 }
+
 public void displayWinningMessage(){
     fill(2,200,43);
     text("You win!", 200,200);
+    System.out.println("win");
 }
 public boolean isValid(int r, int c){
     if (r<NUM_ROWS && c<NUM_COLS && r>=0 && c>=0)
@@ -99,8 +118,13 @@ public class MSButton{
 
     // called by manager
     public void mousePressed() {
-        if (mouseButton==LEFT && flagged==false)
+        if (mouseButton==LEFT && flagged==false){
             clicked = true;
+            if (mines.contains(this)==true)
+                displayLosingMessage();
+        }
+        else if (isWon()==true)
+            displayWinningMessage();
         else if (clicked==false && mouseButton==RIGHT)
             flagged = !flagged;
 
@@ -150,9 +174,7 @@ public class MSButton{
     public boolean isFlagged(){
         return flagged;
     }
+    public boolean isClicked(){
+        return clicked;
+    }
 }
-
-
- // fill(0);
- //    rect(0,0,400,400);
- //    displayLosingMessage();
