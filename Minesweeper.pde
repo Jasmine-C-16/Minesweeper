@@ -30,18 +30,12 @@ public void setMines(){
             rand=(int)(Math.random()*mineprobablility);
             if (rand==1){
                 mines.add(buttons[r][c]);
-                System.out.println(r + ", " + c);
+                //System.out.println(r + ", " + c);
             }
         }
 }
 
 public void draw (){
-    // background( 0 );
-    // if(isWon() == true){
-    //     displayWinningMessage();
-    //     System.exit(0);
-    // }
-
 
 }
 public boolean isWon(){
@@ -64,13 +58,13 @@ public void displayLosingMessage(){
                 buttons[r][c].clicked=true;
             }
         }
-        System.out.println("lose");
+        //System.out.println("lose");
 }
 
 public void displayWinningMessage(){
     fill(2,200,43);
     text("You win!", 200,200);
-    System.out.println("win");
+    //System.out.println("win");
 }
 public boolean isValid(int r, int c){
     if (r<NUM_ROWS && c<NUM_COLS && r>=0 && c>=0)
@@ -123,7 +117,7 @@ public class MSButton{
             if (mines.contains(this)==true)
                 displayLosingMessage();
         }
-        else if (isWon()==true)
+        else if (this.isWon()==true)
             displayWinningMessage();
         else if (clicked==false && mouseButton==RIGHT)
             flagged = !flagged;
